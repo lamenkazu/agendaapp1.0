@@ -1,0 +1,175 @@
+/* Global */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color:darkgoldenrod;    
+    font-family: "Raleway";
+}
+
+
+.container{
+    width: min(90vw, 800px);
+    margin:auto;
+}
+
+header{
+    background-color:rgb(13, 223, 223);
+    padding: 2rem 0 1rem; /*2 0 10 */
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+header h1{
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+
+/*Menu*/
+
+a{
+    text-decoration: none;
+    color:black;
+    display:block;
+    padding: 10px 5px;
+    color: antiquewhite;
+}
+
+a:hover{
+    background-color: rgba(176, 224, 230);
+    color:rgb(1,1,1);
+}
+
+
+#menulabel{
+    padding: 0.5rem;
+    position:absolute;
+    z-index: 1;
+    background-color: rgba(1,1,1,0.5);
+    width: 2rem;
+    
+    transition: all ease 0.6s;
+}
+
+
+
+#menuicon{
+    width: 1rem;
+}
+
+#menulista{
+    border-top-right-radius: 7px;
+    position:absolute;
+    top: 2.2rem;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(1,1,1,0.5);
+
+}
+
+ul{
+    list-style: none;
+}
+
+#menuchec{
+    display:none;
+
+}
+
+
+
+nav{
+    width: 12rem;
+    height: 100%;
+    left: -12rem;
+    position: absolute;
+    transition: all ease 0.5s;
+}
+
+#menuchec:checked ~ #menulabel{
+    width: 12rem;
+
+}
+
+#menuchec:checked ~ nav{
+    transform: translateX(12rem);
+}
+
+#menuchec:checked ~ .card{
+    transform: translateY(10rem);
+}
+
+/*Card*/
+
+.card{
+    margin-left: 30vh;
+    max-width: 30rem;
+    background: rgba(1, 1, 1, 0.534);
+    padding: 1rem 2rem;
+    border-radius: 0.3rem;
+    margin-bottom: 2rem;
+    color:rgb(133, 230, 69);
+    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.637),
+    0px 3px 1px -1px rgb(205, 92, 92),
+    0px 1px 5px 0px rgba(0, 0, 0, 0.76);
+}
+
+.card span{
+    font-weight: normal;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card input{
+    padding: 5px;
+    border-radius: 0.3rem;
+    border: none;
+}
+
+.card p{
+    font-weight: normal;
+    font-size: 1rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#inserirCliente{    
+    font-family: "Raleway";
+    width: 6rem;
+    height: 20px;
+    border: none;
+    color:white;
+    background-color: indianred;
+    color: black;
+
+    padding: 0;
+
+    border-radius: 0.5rem;
+
+    cursor: pointer;
+    margin-bottom: 0;
+    margin-left: 25vh;
+    margin-top: 1rem;
+}
+
+/* Formulario */
+
+.itensForm{
+    margin-top: 10px;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+}
+
+.itensForm input{
+    max-width: 15rem;
+}

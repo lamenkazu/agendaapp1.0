@@ -1,0 +1,18 @@
+{
+  "name": "projeto-agendaapp",
+  "version": "1.0.0",
+  "description": "Agendamento de Clientes",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon ."
+  },
+  "keywords": [],
+  "author": "HIMOG",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
