@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,9 +12,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,700;1,400&display=swap"
         rel="stylesheet">
 </head>
+
 <body>
     <header>
-        <h1>Agenda App</h1>
+        <a href="/">
+            <h1>Agenda App</h1>
+        </a>
+        
     </header>
 
     <section id='menu'>
@@ -23,29 +28,33 @@
         </label>
         <nav>
             <ul id='menulista'>
-                <li><a href="#">Agendamento</a></li>
-                <li><a href="#">Consultas Agendadas</a></li>
-                <li><a href="#">Histórico de Consultas</a></li>
-                <li><a href="#">Lista Clientes</a></li>
-                <li><a href="#">Lista de Procedimentos</a></li>
+                <li><a href="/">Agendamento</a></li>
+                <li><a href="/consultas">Consultas Agendadas</a></li>
+                <li><a href="/historico">Histórico de Consultas</a></li>
             </ul>
         </nav>
     </section>
 
     <main class='container'>
+
         <section class='card' id='agendamento'>
             <form id='form-cliente' action="/" method="post">
                 <div class='itensForm'>
-                     <h2>Agendamento</h2>
+                    <h2>Agendamento</h2>
                 </div>
-
                 <div class='itensForm'>
-                    <label for="nomeCliente">Nome do Cliente</label>
+                    <label for="nomeCliente">Nome</label>
                     <input type="text" name="nomeCliente" id="nomeCliente">
                 </div>
 
                 <div class='itensForm'>
-                    <label for="nomeProc">Procedimento</label>
+                    <label for="nomeCliente">Telefone</label>
+                    <input type="tel" name="telCli" id="telCli">
+                </div>
+
+
+                <div id='divProc' class='itensForm'>
+                    <label id='lblProc' for="nomeProc">Procedimento</label>
                     <input type="text" name="nomeProc" id="nomeProc">
                 </div>
 
@@ -58,49 +67,10 @@
                     <label for="txtValor">Valor:</label>
                     <input type="number" name="txtValor" id="txtValor">
                 </div>
-                <input type="submit" form='form-cliente' id='inserirCliente' value="Inserir Cliente" onclick='agendaCliente()'>
+                <input type="submit" form='form-cliente' id='inserirCliente' value="Inserir Cliente"
+                    onclick='agendaCliente()'>
             </form>
 
-            <input type="button" value="teste" onclick='exibe()'>
-
-        </section>
-
-        <section class='card'  id='consultas'>
-            <div>
-                <h2>Lista de Consultas:</h2>
-                <ul>
-                    
-                </ul>
-            </div>
-            
-        </section>
-
-        <section class='card'  id="historico">
-            <div>
-                <h2>Histórico de Consultas Realizadas:</h2>
-                <ul>
-
-                </ul>
-            </div>
-        </section>
-
-        <section class='card'  id="clientes">
-            <div>
-                <h2>Lista de Clientes Cadastrados:</h2>
-                <ul>
-
-                </ul>
-            </div>
-
-        </section>
-        
-        <section class='card' id="procedimentos">
-            <div>
-                <h2>Lista de Procedimentos:</h2>
-                <ul>
-
-                </ul>
-            </div>
         </section>
 
     </main>
@@ -111,4 +81,5 @@
 
     <script src="/scripts/script.js"></script>
 </body>
+
 </html>
