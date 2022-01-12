@@ -21,9 +21,9 @@ const consultas = [
 ]
 
 //request, response
-routes.get('/', (req, res)=> res.sendFile(__dirname + "/views/index.html", {consultas}))
-routes.get('/consultas', (req, res)=> res.sendFile(__dirname + "/views/consultas.html"))
-routes.get('/historico', (req, res)=> res.sendFile(__dirname + "/views/historico.html"))
+routes.get('/', (req, res)=> res.render(__dirname + "/views/index", {consultas}))
+routes.get('/consultas', (req, res)=> res.render(__dirname + "/views/consultas"))
+routes.get('/historico', (req, res)=> res.render(__dirname + "/views/historico"))
 routes.post('/', (req, res)=>{
 
     const consulta = req.body

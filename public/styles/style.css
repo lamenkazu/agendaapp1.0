@@ -6,14 +6,24 @@
     box-sizing: border-box;
 }
 
-html{
-    font-size: 120%;
-}
-
 body{
     background-color:darkgoldenrod;    
     font-family: "Raleway";
 }
+
+body::-webkit-scrollbar {
+    width: 5px;               /* width of the entire scrollbar */
+  }
+  
+body::-webkit-scrollbar-track {
+    background: rgb(226, 162, 162);        /* color of the tracking area */
+  }
+  
+body::-webkit-scrollbar-thumb {
+    background-color: gold;    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    border: 0.1rem solid black;  /* creates padding around scroll thumb */
+  }
 
 main{
     padding-left:20%;
@@ -103,7 +113,6 @@ ul{
 
 nav{
     width: 12rem;
-    height: 100%;
     left: -12rem;
     position: absolute;
     transition: all ease 0.5s;

@@ -3,6 +3,8 @@ const server = express()
 const routes = require('./routes')
 
 
+server.set('view engine', 'ejs')
+
 //habilita arquivos statics como a pasta Publica definida
 server.use(express.static("public"))
 
