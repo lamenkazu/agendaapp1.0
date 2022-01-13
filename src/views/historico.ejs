@@ -41,42 +41,29 @@
             <div>
                 <h2>Histórico de Consultas Realizadas:</h2>
 
-                <div class="consulta historico">
-                    <div class="id column">1</div>
-                    <div class="status">Realizado</div>
-                    <br>
-                    <div class="name column">Neuza Ferreira</div>
-                    <div class="procedimento">
-                        <p>Implante</p>
+                <% consultas.forEach((consulta)=> {
+                    if(consulta.status =='Realizado'){
+                    %>
+                    <div class="consulta historico">
+                        <div class="id column"> <%= consulta.id_consulta %> </div>
+                        <div class="status"><%= consulta.status %> </div>
+                        <br>
+                        <div class="name column"><%= consulta.nome %></div>
+                        <div class="procedimento">
+                            <p><%= consulta.procedimento %></p>
+                        </div>
+                        <div class="prazo column">
+                            <span>Data:</span>
+                            <p><%= consulta.data %></p>
+                        </div>
+                        <div class="valor column">
+                            <span>Valor:</span>
+                            <p>R$ <%=consulta.valor%>,00</p>
+                        </div>
+                
                     </div>
-                    <div class="prazo column">
-                        <span>Data:</span>
-                        <p>10 de Janeiro</p>
-                    </div>
-                    <div class="valor column">
-                        <span>Valor:</span>
-                        <p>R$ 1000,00</p>
-                    </div>
-
-                </div>
-
-                <div class="consulta historico">
-                    <div class="id column">2</div>
-                    <div class="status">Realizado</div>
-                    <br>
-                    <div class="name column">Henrique Damaceno</div>
-                    <div class="procedimento">
-                        <p>Cirurgia</p>
-                    </div>
-                    <div class="prazo column">
-                        <span>Data:</span>
-                        <p>2 de Janeiro</p>
-                    </div>
-                    <div class="valor column">
-                        <span>Valor:</span>
-                        <p>R$ 800,00</p>
-                    </div>
-                </div>
+                
+                    <% } }) %>
 
         </section>
 
