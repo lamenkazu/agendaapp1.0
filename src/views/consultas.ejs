@@ -39,40 +39,84 @@
             <div>
                 <h2>Lista de Consultas:</h2>
 
-                <%consultas.forEach((consulta)=>{ if(consulta.status =='Agendado'){ %> <!-- comando EJS -->
+                <%consultas.forEach((consulta)=>{%>
+                    <!-- comando EJS -->
 
                     <div class="consulta">
-                        <div class="id column"><%= consulta.id_consulta %> </div>
-                        <div class="status"><%= consulta.status %> </div>
+                        <div class="id column">
+                            <%= consulta.id_consulta %>
+                        </div>
+                        <div class="status">
+                            <%= consulta.status %>
+                        </div>
                         <br>
-                        <div class="name column"><%= consulta.nome %> </div>
+                        <div class="name column">
+                            <%= consulta.nome %>
+                        </div>
+                        <div class='column'> <small>
+                                <%= consulta.telefone %>
+                            </small> </div>
                         <div class="procedimento">
-                            <p><%= consulta.procedimento %> </p>
+                            <p>
+                                <%= consulta.procedimento %>
+                            </p>
                         </div>
                         <div class="prazo column">
                             <span>Prazo:</span>
-                            <p><%= consulta.informe %>  </p>
+                            <p>
+                                <%= consulta.informe %>
+                            </p>
                         </div>
                         <div class="valor column">
                             <span>Valor:</span>
                             <p>R$<%= consulta.valor %>,00</p>
                         </div>
                         <div class="actions">
-                            <a class="button white edit" title="Editar Consulta">
+                            <a href="/consultas/<%= consulta.id_consulta %>" class="button white edit"
+                                title="Editar Consulta">
                                 <img src="/img/edit.png" alt="Editar Consulta" />
                             </a>
-    
-                            <a class="button white delete" title="Excluir Consulta">
+
+                            <a onclick="abrirModal()" type='submit' class="button white delete"
+                                title="Excluir Consulta">
                                 <img src="/img/apagar.png" alt="Excluir Consulta" />
                             </a>
+
                         </div>
                     </div>
 
-                <%}})  %> <!--fim comando EJS -->
+                    <%}) %>
+                        <!--fim comando EJS -->
 
 
 
         </section>
+
+        <section>
+            <%consultas.forEach((consulta)=>{%>
+
+                <div class="modal-wrapper">
+                    <div class="modal">
+                        <img id='img-modal' src="/img/apagar.png" alt="Excluir Consulta" title="Excluir Consulta" />
+                        <h3>Excluir Consulta</h3>
+                        <p>Quer mesmo excluir essa consulta? <br />
+                            Ela será apagada para sempre.
+                        <p>
+                        <footer>
+
+                            <a id='btn-cancell' onclick="fecharModal()">Cancelar</a>
+                            <button class="button red" type="submit" form="apagar">Excluir Consulta</button>
+                        </footer>
+                        <form method="post" action="/consultas/delete/<%= consulta.id_consulta %>" id="apagar">
+
+                        </form>
+                    </div>
+
+                </div>
+                <%}) %>
+        </section>
+
+
     </main>
 
 

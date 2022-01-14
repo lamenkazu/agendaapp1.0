@@ -17,7 +17,7 @@ const Consulta = {
             nome: 'Taís Rocha',
             telefone: '31944562315',
             procedimento: 'Aparelho',
-            horario: '2022-01-12T20:00',
+            horario: '2022-01-15T20:00',
             valor: 80,
             createdAt: Date.now()
 
@@ -58,6 +58,7 @@ const Consulta = {
                 }
             })
 
+
             return res.render(__dirname + "/views/consultas", { consultas: updatedCons })
         },
         historico(req, res) {
@@ -81,10 +82,10 @@ const Consulta = {
 
             return res.render(__dirname + "/views/historico", { consultas: updatedHist })
         },
-        create(req, res){
+        create(req, res) {
             const consulta = req.body
-            const lastId = Consulta.data[Consulta.data.length - 1]?.id_consulta || 1
-        
+            const lastId = Consulta.data[Consulta.data.length - 1]?.id_consulta || 0
+
             Consulta.data.push({
                 id_consulta: lastId + 1,
                 nome: consulta.nomeCliente,
@@ -94,26 +95,78 @@ const Consulta = {
                 valor: consulta.txtValor,
                 createdAt: Date.now() //atribuindo data de criação da consulta
             })
-        }
+        },
+        show(req, res) {
+
+            const consultaId = req.params.id
+
+            const consulta = Consulta.data.find(consulta => Number(consulta.id_consulta) === Number(consultaId))
+
+            if (!consulta) {
+                return res.send('Consulta não encontrada')
+            }
+
+            return res.render(__dirname + "/views/consultas-edit", { consulta })
+        },
+        update(req, res) {
+            //pesquisa ID
+            const consultaId = req.params.id
+            const consulta = Consulta.data.find(consulta => Number(consulta.id_consulta) === Number(consultaId))
+
+            if (!consulta) {
+                return res.send('Consulta não encontrada')
+            }
+
+            const atualiza = {
+                ...consulta,
+                nome: req.body.nomeCliente,
+                telefone: req.body.telCli,
+                procedimento: req.body.nomeProc,
+                horario: req.body.horario,
+                valor: req.body.txtValor
+            }
+
+
+            Consulta.data = Consulta.data.map(consulta => {
+
+                if (Number(consulta.id_consulta) == Number(consultaId)) {
+                    consulta = atualiza
+                }
+
+                console.log(consulta)
+
+                return consulta
+            })
+
+            res.redirect('/consultas/')
+
+        },
+        delete(req, res) {
+            const consultaId = req.params.id
+
+            Consulta.data = Consulta.data.filter(consulta => Number(consulta.id_consulta) !== Number(consultaId))
+
+            return res.redirect('/consultas')
+        },
     },
     services: {
-        diasRestantes(consulta){
+        diasRestantes(consulta) {
             const dataFim = new Date(consulta.horario)
             const tempoRestanteMs = dataFim - Date.now() // tempo restante em mili segundos
             const diaInMs = 1000 * 60 * 60 * 24
-        
+
             let restante = (tempoRestanteMs / diaInMs).toFixed()
-        
-        
+
+
             return restante
         },
-        minutosRestantes(consulta){
+        minutosRestantes(consulta) {
             const dataFim = new Date(consulta.horario)
             const tempoRestanteMs = dataFim - Date.now()
-            const horasInMs = 1000 * 60 * 60 
-        
+            const horasInMs = 1000 * 60 * 60
+
             let restante = ((tempoRestanteMs / horasInMs) * 60).toFixed();
-        
+
             return restante
         },
     }
@@ -122,15 +175,28 @@ const Consulta = {
 //request, response 
 
 //Rotas das Paginas
-routes.get('/', (req, res)=> res.render(__dirname + "/views/index"))
+routes.get('/', (req, res) => res.render(__dirname + "/views/index"))
+
+//Recebimento do Questionario
+routes.post('/', Consulta.controllers.create)
 
 
 routes.get('/consultas', Consulta.controllers.consultas)
 
 
-routes.get('/historico', Consulta.controllers.historico )
+routes.get('/consultas/:id', Consulta.controllers.show)
 
-//Recebimento do Questionario
-routes.post('/', Consulta.controllers.create)
+
+routes.post('/consultas/:id', Consulta.controllers.update)
+
+
+routes.post('/consultas/delete/:id', Consulta.controllers.delete)
+
+
+routes.get('/historico', Consulta.controllers.historico)
+
+
+
+
 
 module.exports = routes;

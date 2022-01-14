@@ -271,10 +271,143 @@ nav{
     text-align: center;
 }
 
+#salvarCliente{    
+    font-family: "Raleway";
+    width: 8rem;
+    height: 3rem;
+    border: none;
+    color:antiquewhite;
+    background-color: rgb(55, 145, 161);
+
+    padding: 10px;
+
+    border-radius: 0.5rem;
+
+    cursor: pointer;
+    margin-bottom: 0;
+    margin-top: 1rem;
+    text-align: center;
+}
+
 #inserirCliente:hover{
     background-color:rgb(133, 230, 69);
     color: black;
 }
+
+#salvarCliente:hover{
+    background-color:rgb(133, 230, 69);
+    color: black;
+}
+
+/* Modal */
+
+#img-modal{
+    width: 2rem;
+}
+
+.modal-wrapper {
+    visibility: hidden;
+    opacity: 0;
+    position: fixed;
+  }
+  
+  .modal-wrapper.on {
+    height: 100vh;
+    width: 100vw;
+  
+    position: fixed;
+    top: 0;
+    left: 0;
+  
+    background: rgba(0, 0, 0, 0.8);
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .modal {
+    background: #F0F2F5;
+  
+    border-radius: 0.313rem;
+  
+    padding: 2.5rem;
+  
+    text-align: center;
+  
+    color: var(--color-card-content);
+  }
+  
+  .modal img {
+    margin-bottom: 2rem;
+  }
+  
+  .modal h3 {
+    color: var(--color-card-title);
+  
+    font-family: IBM Plex Sans;
+    font-weight: 600;
+    font-size: 2rem;
+    line-height: 2.625rem;
+  
+    margin-bottom: .5rem;
+  }
+  
+  .modal p {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .modal footer button {
+    padding: 0.75rem 3rem;
+    border-radius: 0.313rem;
+  
+    font-family: IBM Plex Sans;
+    font-weight: 700;
+    font-size: 0.875rem;
+    line-height: 1.625rem;
+    text-transform: uppercase;
+  
+    transition: all .2s;
+  
+    cursor:pointer;
+  }
+
+  .modal footer{
+      display: flex;
+  }
+
+  #btn-cancell{
+      color: black;
+      padding: 1rem;
+      margin-right: 5rem;
+  }
+
+  #btn-cancell:hover{
+      background-color:rgb(13, 223, 223);
+      border-radius: 30px;
+  }
+  
+  .modal footer button + button {
+    margin-left: .5rem;
+  }
+  
+  .modal footer button:nth-child(1) {
+    background: white;
+  }
+  
+  .modal footer button:nth-child(1):hover {
+    background: #FA3F38;
+  }
+  
+
+  
+  .modal footer button:nth-child(2):hover {
+    background-color: #FA3F38;
+  }
 
 /* Formulario */
 
