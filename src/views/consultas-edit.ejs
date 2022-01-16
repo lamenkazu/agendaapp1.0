@@ -18,7 +18,7 @@
         <a href="/">
             <h1>Agenda App</h1>
         </a>
-        
+
     </header>
 
     <section id='menu'>
@@ -37,11 +37,13 @@
 
     <main class='container'>
 
-        <section class='card' id='agendamento'>
+        <section class='card' id='edit'>
             <form id='form-altera' action="/consultas/<%=consulta.id_consulta%>" method="post">
+
                 <div class='itensForm'>
                     <h2>Editar Consulta</h2>
                 </div>
+
                 <div class='itensForm'>
                     <label for="nomeCliente">Nome</label>
                     <input type="text" name="nomeCliente" id="nomeCliente" value='<%= consulta.nome %>'>
@@ -52,6 +54,10 @@
                     <input type="tel" name="telCli" id="telCli" value='<%= consulta.telefone %>'>
                 </div>
 
+                <div class='itensForm'>
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" value='<%= consulta.email %>'>
+                </div>
 
                 <div id='divProc' class='itensForm'>
                     <label id='lblProc' for="nomeProc">Procedimento</label>
@@ -67,9 +73,39 @@
                     <label for="txtValor">Valor:</label>
                     <input type="number" name="txtValor" id="txtValor" value='<%=consulta.valor%>'>
                 </div>
-                <input type="submit" form='form-altera' id='salvarCliente' value="Salvar Alterações"
-                    onclick='agendaCliente()'>
+                <div id='editBox'>
+                    <input type="submit" form='form-altera' id='salvarCliente' value="Salvar Alterações"
+                        onclick='agendaCliente()'>
+                    <a onclick="abrirModal()" href="#">
+                        <img id='apagarConsulta' src="/img/apagar.png" alt="">
+                    </a>
+            </div>
             </form>
+
+        </section>
+
+        <section>
+
+            <div class="modal-wrapper">
+                <div class="modal">
+                    <img id='img-modal' src="/img/apagar.png" alt="Excluir Consulta" title="Excluir Consulta" />
+                    <h3>Excluir Consulta</h3>
+                    <p>Quer mesmo excluir essa consulta? <br />
+                        Ela será apagada para sempre.
+                    <p>
+                    <footer>
+
+                        <a id='btn-cancell' onclick="fecharModal()">Cancelar</a>
+                        <button class="button red" type="submit" form="apagar">Excluir Consulta</button>
+
+                    </footer>
+
+                    <form action="/consultas/delete/<%= consulta.id_consulta %> " method="post" id="apagar">
+                    </form>
+
+                </div>
+
+            </div>
 
         </section>
 

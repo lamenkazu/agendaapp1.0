@@ -49,6 +49,17 @@
                         <div class="status"><%= consulta.status %> </div>
                         <br>
                         <div class="name column"><%= consulta.nome %></div>
+                        <div class='column'>
+                                <small>
+                                    <%= consulta.telefone %>
+                                </small>
+                            </div>
+                        
+                            <div class='mail column'>
+                                <p>
+                                    <%= consulta.email %>
+                                </p>
+                            </div>
                         <div class="procedimento">
                             <p><%= consulta.procedimento %></p>
                         </div>
@@ -60,12 +71,21 @@
                             <span>Valor:</span>
                             <p>R$ <%=consulta.valor%>,00</p>
                         </div>
+
+                        <div class="actions">
+                            <a href="/consultas/<%= consulta.id_consulta %>" class="button white edit"
+                                title="Editar Consulta">
+                                <img src="/img/edit.png" alt="Editar Consulta" />
+                            </a>
+
+                        </div>
                 
                     </div>
                 
                     <% } }) %>
 
         </section>
+
 
     </main>
 
