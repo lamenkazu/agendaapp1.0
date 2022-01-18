@@ -4,13 +4,30 @@ const consultaController = require('./controllers/consultaController')
 //request, response 
 
 //Rotas das Paginas
+
 routes.get('/', (req, res) => res.render("index"))
 
-//Recebimento do Questionario
-routes.post('/', consultaController.create)
+routes.post('/', consultaController.criarCliente)
+
+routes.get('/agendar-consulta', (req, res) => res.render("agendar-consulta"))
 
 
-routes.get('/consultas', consultaController.consultas)
+
+routes.get('/pacientes', consultaController.pacientes)
+
+routes.post('/pacientes/delete/:id_paciente', consultaController.deletePaciente)
+
+routes.get('/pacientes/:id_paciente', consultaController.editPaciente)
+
+routes.post('/pacientes/:id_paciente', consultaController.updatePaciente)
+
+
+routes.get('/consultas/:id_paciente', consultaController.marcarConsulta)
+
+routes.post('/consultas/:id_paciente', consultaController.criarConsulta)
+
+
+routes.get('/consultas', consultaController.consultas, consultaController.pacientes)
 
 
 routes.get('/consultas/:id', consultaController.show)

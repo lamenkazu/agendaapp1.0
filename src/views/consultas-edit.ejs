@@ -28,7 +28,38 @@
         </label>
         <nav>
             <ul id='menulista'>
-                <li><a href="/">Agendamento</a></li>
+                <li><a href="/<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda App</title>
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <a href="/">
+            <h1>Agenda App</h1>
+        </a>
+    </header>
+
+    <section id='menu'>
+        <input type="checkbox" id="menuchec">
+        <label id='menulabel' for="menuchec">
+            <img src="/img/menu.png" id='menuicon' alt="">
+        </label>
+        <nav>
+            <ul id='menulista'>
+                <li><a href="/">Agendar Pacientes</a></li>
+                <li><a href="/pacientes">Pacientes</a></li>
+                <li><a href="/agendar-consulta">Agendamento</a></li>
                 <li><a href="/consultas">Consultas Agendadas</a></li>
                 <li><a href="/historico">Histórico de Consultas</a></li>
             </ul>
@@ -71,15 +102,9 @@
 
                 <div class='itensForm'>
                     <label for="txtValor">Valor:</label>
-                    <input type="number" name="txtValor" id="txtValor" value='<%=consulta.valor%>'>
+                    <input type="number" step='any' name="txtValor" id="txtValor" value='<%=consulta.valor%>'>
                 </div>
-                <div id='editBox'>
-                    <input type="submit" form='form-altera' id='salvarCliente' value="Salvar Alterações"
-                        onclick='agendaCliente()'>
-                    <a onclick="abrirModal()" href="#">
-                        <img id='apagarConsulta' src="/img/apagar.png" alt="">
-                    </a>
-            </div>
+                
             </form>
 
         </section>

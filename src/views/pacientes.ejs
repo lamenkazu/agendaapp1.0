@@ -29,7 +29,7 @@
             <ul id='menulista'>
                 <li><a href="/">Agendar Pacientes</a></li>
                 <li><a href="/pacientes">Pacientes</a></li>
-                <li><a href="/agendar-consulta">Agendar Consultas</a></li>
+                <li><a href="/agendar-consulta">Agendamento</a></li>
                 <li><a href="/consultas">Consultas Agendadas</a></li>
                 <li><a href="/historico">Histórico de Consultas</a></li>
             </ul>
@@ -39,80 +39,54 @@
     <main class="container">
         <section class='card' id='consultas'>
             <div>
-                <h2>Lista de Consultas:</h2>
+                <h2>Lista de Pacientes:</h2>
 
-                <% consultas.sort((a,b)=> {
-                    return a.horario.localeCompare(b.horario)
-                    }).forEach((consulta)=>{
-
-                         if(consulta.status !== 'Realizado'){ 
-
-                          /*  pacientes.forEach(paciente => {
-
-                            }) */
-                        
-                        
-                        %>
+                <% pacientes.forEach((paciente)=>{
+                    if(paciente.status !== 'Realizado'){ %>
 
                     <div class="consulta">
 
                         <div class="id column">
-                            <%= consulta.id_consulta %>
-                        </div>
-
-                        <div class="status">
-                            <%= consulta.status %>
+                            <%= paciente.id_paciente %>
                         </div>
 
                         <br>
 
                         <div id='showTitle'>
                             <div class="name column">
-                                <%= consulta.nome %>
+                                <%= paciente.nome %>
                             </div>
                         
                             <div class='column'>
                                 <small>
-                                    <%= consulta.telefone %>
+                                    <%= paciente.telefone %>
                                 </small>
                             </div>
                         
                             <div class='mail column'>
                                 <p>
-                                    <%= consulta.email %>
+                                    <%= paciente.email %>
                                 </p>
                             </div>
                         </div>
 
-                        <div class="procedimento">
-                            <p>
-                                <%= consulta.procedimento %>
-                            </p>
-                        </div>
 
-                        <div class="prazo column">
-                            <span>Prazo:</span>
-                            <p>
-                                <%= consulta.informe %>
-                            </p>
-                        </div>
-
-                        <div class="valor column">
-                            <span>Valor:</span>
-                            <p>R$<%= consulta.valor %>,00</p>
-                        </div>
 
                         <div class="actions">
-                            <a href="/consultas/<%= consulta.id_consulta %>" class="button white edit"
-                                title="Editar Consulta">
-                                <img src="/img/edit.png" alt="Editar Consulta" />
+                            <a href="/pacientes/<%= paciente.id_paciente %>" class="button white edit"
+                                title="Editar Paciente">
+                                <img src="/img/edit.png" alt="Editar Dados do Paciente" />
+                            </a>
+
+                            <a href="/consultas/<%=paciente.id_paciente%>" class='button white edit'>
+                                <img src="/img/adicionar.png" alt="Adicionar Consulta">    
                             </a>
 
                         </div>
 
                     </div>
 
-                    <% }}) %>
+                    <%}}) %>
 
             </div>
 

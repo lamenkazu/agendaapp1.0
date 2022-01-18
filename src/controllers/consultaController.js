@@ -1,15 +1,110 @@
-const Consultas = require('../model/Consultas')
+const Paciente = require('../model/Clientes')
 const Consulta = require('../model/Consultas')
 const consultaUtils = require('../utils/consultaUtils')
 
 module.exports = {
-    consultas(req, res) {
+    async criarCliente(req, res){
+        const Pacientes = await Paciente.get()
 
-        const Consultas = Consulta.get()
+        const lastId = Pacientes[Pacientes.length - 1]?.id_paciente || 0
+        const paciente = req.body
+
+        await Paciente.create({
+            id_paciente: lastId + 1,
+            nome: paciente.nome,
+            telefone: paciente.tel,
+            email: paciente.email
+        })
+
+        return res.redirect('/pacientes')
+    },
+    async pacientes(req, res){
+        const Pacientes = await Paciente.get()
+
+        const updatedPac = Pacientes.map((paciente) => {
+            return paciente
+        })
+
+        return res.render("pacientes", {pacientes: updatedPac})
+
+    },
+    async editPaciente(req, res){
+        const Pacientes = await Paciente.get()
+        const pacienteId = req.params.id_paciente
+
+
+        const paciente = Pacientes.find(paciente => Number(paciente.id_paciente) === Number(pacienteId))
+
+        if(!paciente){
+            return res.send('Paciente não encontrado')
+        }
+
+        return res.render('pacientes-edit', {paciente})
+
+
+    },
+    async updatePaciente(req, res){
+        
+        const pacienteId = Number(req.params.id_paciente)
+        
+        const atualiza = {
+            nome: req.body.nome,
+            telefone: req.body.tel,
+            email: req.body.email
+        }
+
+        await Paciente.update(atualiza, pacienteId)
+
+        res.redirect('/pacientes')
+
+    },
+    async deletePaciente(req, res){
+        const pacienteId = Number(req.params.id_paciente)
+
+        await Paciente.delete(pacienteId)
+
+        return res.redirect('/pacientes')
+
+    },
+    async marcarConsulta(req, res){
+
+        
+        const Pacientes = await Paciente.get()
+
+        const pacienteId = req.params.id_paciente
+
+        const paciente = Pacientes.find(paciente => Number(paciente.id_paciente === Number(pacienteId) ))
+
+        if (!paciente) {
+            return res.send('Paciente não encontrado')
+        }
+
+        return res.render("agendar-consulta", {paciente})
+    },
+    async criarConsulta(req, res) {
+
+        const Consultas = await Consulta.get()
+        const lastId = Consultas[Consultas.length - 1]?.id_consulta || 0
+
+         const consulta = req.body
+
+
+         await Consulta.create({
+            id_consulta: lastId + 1,
+            procedimento: consulta.nomeProc,
+            horario: consulta.horario,
+            valor: consulta.txtValor,
+            createdAt: Date.now(),
+            id_paciente: consulta.id_paciente
+        }) 
+
+        return res.redirect('/pacientes')
+    },
+    async consultas(req, res) {
+
+        const Consultas = await Consulta.get()
 
         const updatedCons = Consultas.map((consulta) => {
-
-            
 
             let informe
             let restante = consultaUtils.diasRestantes(consulta)
@@ -53,21 +148,20 @@ module.exports = {
                 }
             }
             //fim dos calculos tempo restante
-
+            
             return {
                 ...consulta,
                 informe,
                 status
             }
 
-        })
-
-        
+        }) 
 
         return res.render("consultas", { consultas: updatedCons })
+
     },
-    historico(req, res) {
-        const Consultas = Consulta.get()
+    async historico(req, res) {
+        const Consultas = await Consulta.get()
 
         const updatedHist = Consultas.map((consulta) => {
             let restante = consultaUtils.minutosRestantes(consulta)
@@ -88,27 +182,9 @@ module.exports = {
 
         return res.render("historico", { consultas: updatedHist })
     },
-    create(req, res) {
-        const Consultas = Consulta.get()
-        const consulta = req.body
-        const lastId = Consultas[Consultas.length - 1]?.id_consulta || 0
+    async show(req, res) {
 
-        Consultas.push({
-            id_consulta: lastId + 1,
-            nome: consulta.nomeCliente,
-            telefone: consulta.telCli,
-            email: consulta.email,
-            procedimento: consulta.nomeProc,
-            horario: consulta.horario,
-            valor: consulta.txtValor,
-            createdAt: Date.now() //atribuindo data de criação da consulta
-        })
-
-        return res.redirect('/consultas')
-    },
-    show(req, res) {
-
-        const Consultas = Consulta.get()
+        const Consultas = await Consulta.get()
 
         const consultaId = req.params.id
 
@@ -120,20 +196,19 @@ module.exports = {
 
         return res.render("consultas-edit", { consulta })
     },
-    update(req, res) {
+    async update(req, res) {
 
-        const Consultas = Consulta.get()
+        const Consultas = await Consulta.get()
 
         //pesquisa ID
         const consultaId = req.params.id
-        const consulta = Consultas.find(consulta => Number(consulta.id_consulta) === Number(consultaId))
+         /*const consulta = Consultas.find(consulta => Number(consulta.id_consulta) === Number(consultaId))
 
         if (!consulta) {
             return res.send('Consulta não encontrada')
-        }
+        } */
 
         const atualiza = {
-            ...consulta,
             nome: req.body.nomeCliente,
             telefone: req.body.telCli,
             email: req.body.email,
@@ -143,24 +218,24 @@ module.exports = {
         }
 
 
-        const novaConsulta = Consultas.map(consulta => {
+       /* const novaConsulta = Consultas.map(consulta => {
 
             if (Number(consulta.id_consulta) == Number(consultaId)) {
                 consulta = atualiza
             }
 
             return consulta
-        })
+        }) */
 
-        Consulta.update(novaConsulta)
+        await Consulta.update(atualiza, consultaId)
 
         res.redirect('/consultas/')
 
     },
-    delete(req, res){
+    async delete(req, res){
         const consultaId = req.params.id
 
-        Consulta.delete(consultaId)
+        await Consulta.delete(consultaId)
 
         return res.redirect('/consultas')
     }

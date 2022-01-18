@@ -1,48 +1,57 @@
-
-
-let data = [
-    {
-        id_consulta: 1,
-        nome: 'Erick Etiene',
-        telefone: '31992855944',
-        email: '333.erick@gmail.com',
-        procedimento: 'Limpeza',
-        horario: '2022-01-17T19:14',
-        valor: 100,
-        createdAt: Date.now()
-    },
-    {
-        id_consulta: 2,
-        nome: 'Taís Rocha',
-        telefone: '31944562315',
-        email: 'chatata@gmail.com',
-        procedimento: 'Aparelho',
-        horario: '2022-01-17T13:50',
-        valor: 80,
-        createdAt: Date.now()
-
-    },
-    {
-        id_consulta: 3,
-        nome: 'Itamar Batista',
-        telefone: '319456132',
-        email: 'ItamarBT@gmail.com',
-        procedimento: 'Canal',
-        horario: '2022-01-14T15:50',
-        valor: 900,
-        createdAt: Date.now()
-
-    },
-]
+const Database = require('../database/config')
 
 module.exports = {
-    get(){
-        return data
+    async get(){
+        const db = await Database()
+
+        const consultas = await db.all(`SELECT * FROM consultas
+            JOIN pacientes
+            ON pacientes.id_paciente = consultas.id_paciente
+        `)
+
+        await db.close()
+
+        return consultas
     },
-    update(novaConsulta){
-        data = novaConsulta
+    async update(atualiza, consultaId){
+        const db = await Database()
+
+        await db.run(`UPDATE consultas SET 
+            procedimento = "${atualiza.procedimento}",
+            horario = "${atualiza.horario}",
+            valor = ${atualiza.valor}
+            WHERE id_consulta = ${consultaId}
+        `)
+
+        await db.close()
     },
-    delete(consultaId){
-        data = data.filter(consulta => Number(consulta.id_consulta) !== Number(consultaId))
-    }
+    async delete(consultaId){
+        const db = await Database()
+
+        db.run(`DELETE FROM consultas WHERE id_consulta = ${consultaId}`)
+
+        await db.close()
+        
+    },
+    async create(novaConsulta){
+        const db = await Database()
+
+        await db.run(`INSERT INTO consultas (
+            id_consulta,
+            procedimento,
+            horario,
+            valor,
+            createdAt,
+            id_paciente
+        ) VALUES (
+            ${novaConsulta.id_consulta},
+            "${novaConsulta.procedimento}",
+            "${novaConsulta.horario}",
+            ${novaConsulta.valor},
+            ${novaConsulta.createdAt},
+            ${novaConsulta.id_paciente}
+        );`)
+
+        await db.close()
+    },
 }

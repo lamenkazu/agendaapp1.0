@@ -39,28 +39,58 @@
     <main class='container'>
 
         <section class='card' id='agendamento'>
-            <form id='form-cliente' action="/" method="post">
+            <form id='form-altera' action="/pacientes/<%=paciente.id_paciente %>" method="post">
                 <div class='itensForm'>
-                    <h2>Agendamento de Pacientes</h2>
+                    <h2>Editar Paciente</h2>
                 </div>
                 <div class='itensForm'>
                     <label for="nomeCliente">Nome</label>
-                    <input type="text" name="nome" id="nome">
+                    <input type="text" name="nome" id="nome" value='<%= paciente.nome %>'>
                 </div>
 
                 <div class='itensForm'>
                     <label for="telCli">Telefone</label>
-                    <input type="tel" name="tel" id="tel">
+                    <input type="tel" name="tel" id="tel" value='<%= paciente.telefone %>'>
                 </div>
 
                 <div class='itensForm'>
                     <label for="email">Email:</label>
-                    <input type="email" name="email" id="email">
+                    <input type="email" name="email" id="email" value='<%= paciente.email %>'>
                 </div>
 
-                <input type="submit" form='form-cliente' id='inserirCliente' value="Inserir Paciente"
-                    onclick='agendaCliente()'>
+                <div id='editBox'>
+                    <input type="submit" form='form-altera' id='salvarCliente' value="Salvar Alterações"
+                        onclick='agendaCliente()'>
+                    <a onclick="abrirModal()" href="#">
+                        <img id='apagarConsulta' src="/img/apagar.png" alt="">
+                    </a>
+                </div>
             </form>
+
+        </section>
+
+        <section>
+
+            <div class="modal-wrapper">
+                <div class="modal">
+                    <img id='img-modal' src="/img/apagar.png" alt="Excluir Consulta" title="Excluir Consulta" />
+                    <h3>Excluir Consulta</h3>
+                    <p>Quer mesmo excluir essa consulta? <br />
+                        Ela será apagada para sempre.
+                    <p>
+                    <footer>
+
+                        <a id='btn-cancell' onclick="fecharModal()">Cancelar</a>
+                        <button class="button red" type="submit" form="apagar">Excluir Consulta</button>
+
+                    </footer>
+
+                    <form action="/pacientes/delete/<%= paciente.id_paciente %>" method="post" id="apagar">
+                    </form>
+
+                </div>
+
+            </div>
 
         </section>
 

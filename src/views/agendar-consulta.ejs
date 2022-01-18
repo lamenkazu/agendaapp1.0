@@ -29,7 +29,7 @@
             <ul id='menulista'>
                 <li><a href="/">Agendar Pacientes</a></li>
                 <li><a href="/pacientes">Pacientes</a></li>
-                <li><a href="/agendar-consulta">Agendar Consultas</a></li>
+                <li><a href="/agendar-consulta">Agendamento</a></li>
                 <li><a href="/consultas">Consultas Agendadas</a></li>
                 <li><a href="/historico">Histórico de Consultas</a></li>
             </ul>
@@ -39,27 +39,31 @@
     <main class='container'>
 
         <section class='card' id='agendamento'>
-            <form id='form-cliente' action="/" method="post">
+            <form id='form-cliente' action="/consultas/:id_paciente" method="post">
                 <div class='itensForm'>
-                    <h2>Agendamento de Pacientes</h2>
-                </div>
-                <div class='itensForm'>
-                    <label for="nomeCliente">Nome</label>
-                    <input type="text" name="nome" id="nome">
+                    <h2>Agendamento</h2>
                 </div>
 
                 <div class='itensForm'>
-                    <label for="telCli">Telefone</label>
-                    <input type="tel" name="tel" id="tel">
+                    <label for="id_paciente">ID Paciente</label>
+                    <input type="number" name="id_paciente" id="id_paciente" value='<%= paciente.id_paciente %>' readonly>
+                </div>
+
+                <div id='divProc' class='itensForm'>
+                    <label id='lblProc' for="nomeProc">Procedimento</label>
+                    <input type="text" name="nomeProc" id="nomeProc">
                 </div>
 
                 <div class='itensForm'>
-                    <label for="email">Email:</label>
-                    <input type="email" name="email" id="email">
+                    <label for="horario">Horario</label>
+                    <input type="datetime-local" name="horario" id="horario">
                 </div>
 
-                <input type="submit" form='form-cliente' id='inserirCliente' value="Inserir Paciente"
-                    onclick='agendaCliente()'>
+                <div class='itensForm'>
+                    <label for="txtValor">Valor:</label>
+                    <input type="number" step='any' name="txtValor" id="txtValor">
+                </div>
+                <input type="submit" form='form-cliente' id='inserirCliente' value="Inserir Cliente">
             </form>
 
         </section>
