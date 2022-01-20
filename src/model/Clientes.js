@@ -10,6 +10,18 @@ module.exports = {
 
         return pacientes
     },
+    async getfile(){
+        const db = await Database()
+
+        const pacientesfile = await db.all(`SELECT * FROM pacientes
+            JOIN listaArquivos
+            ON listaArquivos.id_paciente = pacientes.id_paciente
+        `)
+
+        await db.close()
+
+        return pacientesfile
+    },
     async create(novoPaciente){
         const db = await Database()
 

@@ -65,9 +65,47 @@
                         <img id='apagarConsulta' src="/img/apagar.png" alt="">
                     </a>
                 </div>
+
             </form>
 
         </section>
+
+        <section class="card">
+            <div>
+                <form method='POST' action="/pacientes/postfile/<%= paciente.id_paciente %>" enctype="multipart/form-data">
+                    <input type="file" name="file" id="">  
+                    <input type="submit" value="Upload">  
+                </form>    
+            </div>
+        </section>
+
+        <section class='card'>
+            <div>
+                <ul>
+                    <% 
+                    
+                    
+                    if(paciente.id_paciente === arquivos.id_paciente){
+                        %> 
+
+                        <li> 
+                            <a href="">
+                                <%= arquivos.nome_arquivo %> 
+                            </a>    
+                        </li>
+
+                        <%} else{%> 
+                            <li>Nenhum Arquivo Inserido</li>
+
+                        <% } %> 
+
+
+
+                </ul>
+            </div>
+        </section>
+
+        
 
         <section>
 

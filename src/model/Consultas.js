@@ -13,6 +13,19 @@ module.exports = {
 
         return consultas
     },
+    async getParcial(pacienteId){
+        const db = await Database()
+
+        const consultas = await db.all(`SELECT * FROM consultas
+            JOIN pacientes
+            ON pacientes.id_paciente = consultas.id_paciente
+            WHERE consultas.id_paciente = ${pacienteId}
+        `)
+
+        await db.close()
+
+        return consultas
+    },
     async update(atualiza, consultaId){
         const db = await Database()
 

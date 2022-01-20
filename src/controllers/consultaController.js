@@ -1,6 +1,8 @@
 const Paciente = require('../model/Clientes')
 const Consulta = require('../model/Consultas')
 const consultaUtils = require('../utils/consultaUtils')
+const Arquivo = require('../model/Arquivos')
+const crypto = require('crypto')
 
 module.exports = {
     async criarCliente(req, res){
@@ -28,18 +30,58 @@ module.exports = {
         return res.render("pacientes", {pacientes: updatedPac})
 
     },
+    async uploadArquivos(req, res){
+        const pacienteId = Number(req.params.id)
+        
+        if(req.files){
+
+            const Arquivos = await Arquivo.get()
+
+            const file = req.files.file
+
+            const lastId = Arquivos[Arquivos.length - 1]?.id_arquivos || 0
+
+
+            const crip = crypto.randomBytes(8)
+            const filename = `${crip.toString('hex')}${file.name}`
+
+            await Arquivo.create({
+                id_arquivos: lastId + 1,
+                nome_arquivo: file.name,
+                code: filename,
+                local: 'public/uploads/',
+                id_paciente: pacienteId
+            })
+
+
+             file.mv('public/uploads/' + filename, function(err){
+                if(err){
+                    res.send(err)
+                }else{
+                    res.redirect('/pacientes/')
+                }
+            })
+
+        } else res.redirect('/pacientes/'+pacienteId)
+    }, 
     async editPaciente(req, res){
         const Pacientes = await Paciente.get()
+        const PacientesFile = await Paciente.getfile()
+
         const pacienteId = req.params.id_paciente
 
 
         const paciente = Pacientes.find(paciente => Number(paciente.id_paciente) === Number(pacienteId))
+        let arquivos = PacientesFile.find(paciente => Number(paciente.id_paciente) === Number(pacienteId))
+        if(!arquivos){
+            arquivos = 0
+        }
 
         if(!paciente){
             return res.send('Paciente não encontrado')
         }
 
-        return res.render('pacientes-edit', {paciente})
+        return res.render('pacientes-edit', {paciente, arquivos})
 
 
     },
@@ -65,6 +107,75 @@ module.exports = {
 
         return res.redirect('/pacientes')
 
+    },
+    async consultasEspecificas(req, res){
+
+        const pacienteId = Number(req.params.id_paciente)
+
+
+        const Consultas = await Consulta.getParcial(pacienteId)
+
+        const consultas = Consultas.map(consulta=>{
+
+            let informe
+            let restante = consultaUtils.diasRestantes(consulta)
+            let status = restante <= 0 ? 'Realizado' : 'Agendado'
+
+            //calculos de tempo restante
+            //Dias
+            if (restante <= 1) {
+                if (restante <= 0)
+                    restante = 0
+                informe = 'Daqui a ' + restante.toString() + ' dia '
+            } else {
+                informe = 'Daqui a ' + restante.toString() + ' dias';
+            }
+
+            //horas
+            if (restante < 1) {
+                restante = consultaUtils.horasRestantes(consulta)
+                status = restante <= 0 ? 'Realizado' : 'Agendado'
+
+                if (restante <= 1) {
+                    if (restante <= 0)
+                        restante = 0
+                    informe = 'Daqui a ' + restante.toString() + ' hora'
+                } else {
+                    informe = 'Daqui a ' + restante.toString() + ' horas';
+                }
+            }
+
+            //minutos
+            if (restante < 1) {
+                restante = consultaUtils.minutosRestantes(consulta)
+                status = restante <= 0 ? 'Realizado' : 'Agendado'
+
+                if (restante <= 1) {
+                    if (restante <= 0)
+                        restante = 0
+                    informe = 'Daqui a ' + restante.toString() + ' minuto'
+                } else {
+                    informe = 'Daqui a ' + restante.toString() + ' minutos';
+                }
+            }
+            //fim dos calculos tempo restante
+
+            dayName = new Array("Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado")
+            monName = new Array("janeiro", "fevereiro", "março", "abril", "maio", "junho", "agosto", "outubro", "novembro", "dezembro")
+            const time = new Date(consulta.horario)
+
+            let data = ` ${dayName[time.getDay()]} - ${time.getDate()} de ${monName[time.getMonth()]} de ${time.getFullYear()}`
+
+
+            return {
+                ...consulta,
+                informe,
+                status,
+                data
+            }
+        })
+
+        return res.render('consultas-especificas', {consultasEspecificas: consultas})
     },
     async marcarConsulta(req, res){
 

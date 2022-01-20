@@ -23,6 +23,15 @@ const initDb = {
             FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente)
         )`)
 
+        await db.exec(`CREATE TABLE listaArquivos (
+            id_arquivos INTEGER PRIMARY KEY,
+            nome_arquivo TEXT,
+            code TEXT,
+            local TEXT,
+            id_paciente INTEGER,
+            FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente)
+        )`)
+
         await db.run(`INSERT INTO pacientes (
         
             id_paciente,

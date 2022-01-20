@@ -29,7 +29,6 @@
             <ul id='menulista'>
                 <li><a href="/">Agendar Pacientes</a></li>
                 <li><a href="/pacientes">Pacientes</a></li>
-                <li><a href="/agendar-consulta">Agendamento</a></li>
                 <li><a href="/consultas">Consultas Agendadas</a></li>
                 <li><a href="/historico">Histórico de Consultas</a></li>
             </ul>
@@ -37,69 +36,80 @@
     </section>
 
     <main class="container">
-
-        <section class='search-box'>
-            <form id='form-pesquisa' action='/pacientes/' method='post'>
-                <input class='search-txt' type="search" name="searchPac" id="searchPac" placeholder="Nome do Paciente..." list='pacientes'>
-                <a href="#" class='search-btn'>
-                    <img id='search-btn' src="/img/pesquisa.png" alt="Botão Pesquisar">
-                </a>
-            </form>
-        </section>
-
         <section class='card' id='consultas'>
             <div>
-                <h2>Lista de Pacientes:</h2>
-                
-                <% pacientes.forEach((paciente)=>{
-                    if(paciente.status !== 'Realizado'){ %>
+                <h2>Lista de Consultas:</h2>
+
+                <% consultasEspecificas.sort((a,b)=>{
+                    return b.horario.localeCompare(a.horario)
+                }).forEach(consulta => { 
+                    %>
 
                     <div class="consulta">
 
                         <div class="id column">
-                            <%= paciente.id_paciente %>
+                            <%= consulta.id_consulta %>
+                        </div>
+
+                        <div class="status">
+                            <%= consulta.status %>
                         </div>
 
                         <br>
 
                         <div id='showTitle'>
                             <div class="name column">
-                                <%= paciente.nome %>
+                                <%= consulta.nome %>
                             </div>
                         
                             <div class='column'>
                                 <small>
-                                    <%= paciente.telefone %>
+                                    <%= consulta.telefone %>
                                 </small>
                             </div>
                         
                             <div class='mail column'>
                                 <p>
-                                    <%= paciente.email %>
+                                    <%=consulta.email  %>
                                 </p>
                             </div>
                         </div>
 
+                        <div class="procedimento">
+                            <p>
+                                <%= consulta.procedimento  %>
+                            </p>
+                        </div>
 
+                        <div class="prazo column">
+                            <% if(consulta.status === 'Agendado'){%>
+                            <span>Prazo:</span>
+                            <p>
+                                <%= consulta.informe %>
+                            </p>
+                                <% }else {  %>
+                                    <span>Data: </span>
+                                    <%= consulta.data %>
+                                    <% }%>
+                            
+                        </div>
+
+                        <div class="valor column">
+                            <span>Valor:</span>
+                            <p>R$<%= consulta.valor %>,00</p>
+                        </div>
 
                         <div class="actions">
-                            <a href="/pacientes/<%= paciente.id_paciente %>" class="button white edit"
-                                title="Editar Paciente">
-                                <img src="/img/edit.png" alt="Editar Dados do Paciente" />
+                            <a href="/consultas/<%= %>" class="button white edit"
+                                title="Editar Consulta">
+                                <img src="/img/edit.png" alt="Editar Consulta" />
                             </a>
-
-                            <a href="/consultas/<%=paciente.id_paciente%>" class='button white edit'>
-                                <img src="/img/adicionar.png" alt="Adicionar Consulta">    
-                            </a>
-
-                            <a href="/pacientes/consultas/<%= paciente.id_paciente%>" class='button white edit'>
-                                <img src="/img/lista.png" alt="Lista de Conuslta"></a>
 
                         </div>
 
                     </div>
 
-                    <%}}) %>
+                    <% }) %>
 
             </div>
 

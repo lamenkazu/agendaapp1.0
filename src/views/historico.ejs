@@ -43,7 +43,9 @@
             <div>
                 <h2>Histórico de Consultas Realizadas:</h2>
 
-                <% consultas.forEach((consulta)=> {
+                <% consultas.sort((a,b) => {
+                    return a.horario.localeCompare(b.horario)
+                }).forEach((consulta)=> {
                     if(consulta.status =='Realizado'){
                     %>
                     <div class="consulta historico">

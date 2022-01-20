@@ -56,12 +56,54 @@ header h1{
     color: black;
 }
 
-/* Sarch Bar*/
+/* Search Bar*/
 
-#searchBar{
-    text-align: center;
-    margin-bottom: 10px;
+#search-btn{
+    width: 1rem;
 }
+
+.search-box{
+    display: grid;
+    position: relative;
+    margin-top: 3rem;
+    margin-bottom: 0;
+    left: 40%;
+    transform: translate(-50%, -50%);
+    background: #353b48;
+    height: 40px;
+    border-radius: 40px;
+    padding: 0 6px;
+    width: 15rem;
+    transition: ease all 0.5s;
+}
+
+.serach-btn{
+    color: #00a8ff;
+    float: right;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #353b48;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-txt{
+    border: none;
+    background: none;
+    outline: none;
+    float: left;
+    padding: 0;
+    color: white;
+    font-size: 16px;
+    transition: 0.5s;
+    line-height: 40px;
+    width: 200px;
+    padding: 0 6px;
+}
+
+
 
 
 /*Menu*/
@@ -196,6 +238,7 @@ nav{
 
 .actions{
     display: flex;
+    margin-left: 35%;
 }
 
 #acthist a{
@@ -204,7 +247,10 @@ nav{
 
 .actions .button img{
     width: 1.7rem;
-    margin-left: 150px;
+
+}
+.actions .button img:hover{
+    background-color: antiquewhite;
 
 }
 
