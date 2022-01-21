@@ -29,7 +29,6 @@
             <ul id='menulista'>
                 <li><a href="/">Agendar Pacientes</a></li>
                 <li><a href="/pacientes">Pacientes</a></li>
-                <li><a href="/agendar-consulta">Agendar Consultas</a></li>
                 <li><a href="/consultas">Consultas Agendadas</a></li>
                 <li><a href="/historico">Histórico de Consultas</a></li>
             </ul>
@@ -83,21 +82,28 @@
             <div>
                 <ul>
                     <% 
-                    
-                    
-                    if(paciente.id_paciente === arquivos.id_paciente){
-                        %> 
 
-                        <li> 
-                            <a href="">
-                                <%= arquivos.nome_arquivo %> 
-                            </a>    
-                        </li>
+                    if(arquivos.length > 0){
+                        
+                        
+                        for(let pos in arquivos){
+                        
+                            if(paciente.id_paciente === arquivos[pos].id_paciente ){
+                                %> 
 
-                        <%} else{%> 
-                            <li>Nenhum Arquivo Inserido</li>
+                                    <li> 
+                                        <a href="http://127.0.0.1:8887/<%=arquivos[pos].code%>" target='__blank'>
+                                            <%= 
+                                                arquivos[pos].nome_arquivo
+                                            %>
+                                        </a>    
+                                    </li>
 
-                        <% } %> 
+                            <%} 
+                        }
+                    }else{ %>
+                        <li>Nenhuma Arquivo</li>
+                   <%}%> 
 
 
 
@@ -112,14 +118,14 @@
             <div class="modal-wrapper">
                 <div class="modal">
                     <img id='img-modal' src="/img/apagar.png" alt="Excluir Consulta" title="Excluir Consulta" />
-                    <h3>Excluir Consulta</h3>
-                    <p>Quer mesmo excluir essa consulta? <br />
-                        Ela será apagada para sempre.
+                    <h3>Excluir Paciente</h3>
+                    <p>Quer mesmo excluir esse paciente? <br />
+                        Ele será apagado para sempre junto de todas as suas consultas e arquivos.
                     <p>
                     <footer>
 
                         <a id='btn-cancell' onclick="fecharModal()">Cancelar</a>
-                        <button class="button red" type="submit" form="apagar">Excluir Consulta</button>
+                        <button class="button red" type="submit" form="apagar">Excluir Paciente</button>
 
                     </footer>
 

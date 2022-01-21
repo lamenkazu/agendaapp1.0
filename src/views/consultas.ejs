@@ -29,7 +29,6 @@
             <ul id='menulista'>
                 <li><a href="/">Agendar Pacientes</a></li>
                 <li><a href="/pacientes">Pacientes</a></li>
-                <li><a href="/agendar-consulta">Agendar Consultas</a></li>
                 <li><a href="/consultas">Consultas Agendadas</a></li>
                 <li><a href="/historico">Histórico de Consultas</a></li>
             </ul>
@@ -103,7 +102,7 @@
                         </div>
 
                         <div class="actions">
-                            <a href="/consultas/<%= consulta.id_consulta %>" class="button white edit"
+                            <a href="/consultas/edit/<%= consulta.id_consulta %>" class="button white edit"
                                 title="Editar Consulta">
                                 <img src="/img/edit.png" alt="Editar Consulta" />
                             </a>
